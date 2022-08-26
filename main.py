@@ -2,9 +2,11 @@ import os
 from pytube import YouTube
 import ffmpeg
 
+""" this code needs some comments I know that , I will add them in the days comming and some more functionalities will be added also...stay tuned:)"""
+
 ALL_POSSIBLE_RES = ["2160p", "1440p", "1080p", "720p", "480p", "360p", "240p", "144p"]
 user_path = str(os.environ["HOMEPATH"].replace("\\", "/"))
-main_path = f"C:{user_path}"+"/Desktop/all_youtube_downloaded_video_version_2"
+main_path = f"C:{user_path}"+"/Desktop/all_youtube_downloaded_video_version_2"  #this is the path that the videos will be downloaded to.
 
 
 print("Welcome to my YouTube downloader script.")
