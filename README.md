@@ -17,7 +17,8 @@
   
   
   
-  # I am working on this project daily , more functionalities will be added soon (in the next few days), the comments will be added with a perfect explanation... 
+  ### I am working on this project daily , more functionalities will be added soon (in the next few days), the comments will be added with a perfect explanation... 
+  ### I will try to make a commands rather than some choices ... it will give the full functionality to the user...
   
   @mbk-naboore
   
