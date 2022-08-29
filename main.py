@@ -2,26 +2,37 @@ import os
 from pytube import YouTube
 import ffmpeg
 
-""" this code needs some comments I know that , I will add them in the days comming and some more functionalities will be added also...stay tuned:)"""
-
-ALL_POSSIBLE_RES = ["2160p", "1440p", "1080p", "720p", "480p", "360p", "240p", "144p"]
 user_path = str(os.environ["HOMEPATH"].replace("\\", "/"))
-main_path = f"C:{user_path}"+"/Desktop/all_youtube_downloaded_video_version_2"  #this is the path that the videos will be downloaded to.
-
-
-print("Welcome to my YouTube downloader script.")
+main_path = f"C:{user_path}"+"/Desktop/all_youtube_downloaded_video_version_2"
+def check_the_main_directory(folder_path):
+    if not os.path.isdir(folder_path):
+        os.mkdir(folder_path)
+        pass
 
 
 def making_the_youtube_object(url):
     try: 
-        return YouTube(url=url)
+        return YouTube(url=url, on_progress_callback=progress_function)
     except Exception as ex:
         print("Sorry the url you have provided is not correct...")
+def progress_function(vid, chunk, bytes_remaining):
+
+    current = ((vid.filesize - bytes_remaining)/vid.filesize) #the percent of completion...
+    percent = ('{0:.1f}').format(current*100) #this is the % like 80%...
+    progress = int(50*current)
+    status = '█' * progress + '-' * (50 - progress)
+    print(f' ↳ |{status}| {percent}%\n   Size:{round((vid.filesize/1024)/1024,1)} MB, Downloaded: {round(((vid.filesize-bytes_remaining)/1024)/1024, 1)} MB, Remaining:{round((bytes_remaining / 1024) / 1024, 1)} MB\n')
 def naming_the_video(ask_or_not, url):
     """ this will give the user the ability to name the video as he like..."""
-    if ask_or_not and input("Would you like to use the default title [y/Y]or[n/N] ? ").lower().strip() == "n":
-        # if the answer was (n) then we ask the user to give us the title he would love to have...
-        return str(input("Please provide the new title :-")).strip().replace("|", "_")+".mp4"
+    if ask_or_not:
+        user_input = input("Would you like to use the default title [y/Y]or[n/N] ? ").strip()
+        while user_input.lower() != "y" and user_input.lower() != "n":
+            print(f"'{user_input}'is not recognized as an accepted option.\n")
+            user_input = input("Would you like to use the default title [y/Y]or[n/N] ? ").strip()
+            continue
+        if user_input.lower() == "n":
+            # if the answer was (n) then we ask the user to give us the title he would love to have...
+            return str(input("Please provide the new title :-")).strip().replace("|", "_") + ".mp4"
 
     return making_the_youtube_object(url).title.replace("|", "_")+".mp4"
 
@@ -30,6 +41,7 @@ def fast_stream_progressive_true(ask_or_not, url):
     """ this function is made just to be the fastest a low-quality but fast download,
         this function will do that.by giving the streams that has the video+audio together
         and downloading that stream directly.(360p, 240p ,144p) are the expected resolutions."""
+    print("\nDownloading The Video:")
     try:
         both_streams = making_the_youtube_object(url).streams.filter(progressive=True).order_by("resolution").desc()\
             .first().download(output_path=main_path, filename=naming_the_video(ask_or_not=ask_or_not, url=url))
@@ -37,8 +49,8 @@ def fast_stream_progressive_true(ask_or_not, url):
         print("There was an error while using the fast_stream_downloader function...")
         print(ex)
 
-
 def best_audio_downloader(ask_or_not, url):
+    print("Downloading The audio-only:")
     try:
         if ask_or_not:  # if it is true then this is the normal one by one download , if this is false then this is the call from the bulk download so you need to name it directly by the name of the title on the youtube.... 
             audio_only = making_the_youtube_object(url).streams.filter(only_audio=True).order_by("abr").desc() \
@@ -53,6 +65,7 @@ def best_audio_downloader(ask_or_not, url):
         print(ex)
     return False
 def best_video_downloader(ask_or_not, url):
+    print("\nDownloading The Video-only:")
     try:
         if ask_or_not:
             video_only = making_the_youtube_object(url).streams.filter(progressive=False).order_by("resolution").desc() \
@@ -77,6 +90,7 @@ def best_stream_downloader(ask_or_not, url):
         print(ex)
     return False
 def merging_video_and_audio(ask_or_not, url):
+    print("\nMerging The Video and Audio streams:")
     try:
         # the merging time:
         video = ffmpeg.input(main_path+"/video_only.mp4")
@@ -93,7 +107,6 @@ def cleaning_up():
     except Exception as ex:
         print("the files were not cleaned...")
         print(ex)
-
 
 
 def reading_url_list_from_file(file):
@@ -141,12 +154,10 @@ def bulk_merging_and_cleaning_for_best_urls_textfile_downloader(ask_or_not, url)
         print(ex)
 
 
-
-
 def menu_of_available_options():
 
     print("Please choose the action you would like to take:")
-    print("NOTE: any fast download can vary in resolution (expected resolutions 720p,480p,360p,244p,144p)...")
+    print("******NOTE: any fast download can vary in resolution between 720p and 144p.******")
     print("1) fast download video+audio.")
     print("2) highest resolution video+audio.")
     print("3) highest resolution mp4 video-only.")
@@ -157,7 +168,9 @@ def menu_of_available_options():
     print()
     pass
 
+
 def main():
+    check_the_main_directory(main_path)
     menu_of_available_options()
     action = int(input(">>> "))
     if action in list(range(1, 5)):
@@ -181,5 +194,7 @@ def main():
     else:
         print("Sorry the action you have chosen is not correct.")
 
+
+print("\nWelcome to my YouTube downloader script.\n")
 
 main()
