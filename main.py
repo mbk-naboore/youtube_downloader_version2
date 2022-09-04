@@ -220,7 +220,7 @@ def main():
     check_the_main_directory(main_path)
     menu_of_available_options()
     action = str(input(">>> ")).strip()
-    if action.isalpha():
+    if not action.isnumeric():
         print("Sorry the action you have chosen is not correct.")
         main()
     if int(action) in list(range(1, 5)):
