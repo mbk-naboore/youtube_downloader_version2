@@ -148,7 +148,7 @@ def reading_url_list_from_file(file):
         with open(file, "r") as f:
             urls_list = list()
             for line in f:
-                if line.strip() and YouTube(url=line.strip()):
+                if line.strip() and line.startswith("https://www.youtube.com/"):
                     urls_list.append(line.strip())
         return urls_list
     except Exception as ex:
