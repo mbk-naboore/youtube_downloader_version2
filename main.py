@@ -24,6 +24,7 @@ def progress_function(vid, chunk, bytes_remaining):
         f' ↳ |{status}| {percent}%\n   Size:{round((vid.filesize / 1024) / 1024, 1)} MB, Downloaded: {round(((vid.filesize - bytes_remaining) / 1024) / 1024, 1)} MB, Remaining:{round((bytes_remaining / 1024) / 1024, 1)} MB\n')
 def naming_the_video(ask_or_not, url):
     """ this will give the user the ability to name the video as he like..."""
+    not_allowed_char = ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]
     if ask_or_not:
         user_input = input("Would you like to use the default title [y/Y]or[n/N]? ").strip()
         print()
@@ -34,11 +35,16 @@ def naming_the_video(ask_or_not, url):
             continue
         if user_input.lower() == "n":
             # if the answer was (n) then we ask the user to give us the title he would love to have...
-            new_title = str(input("Please provide the new title: ")).strip().replace("|", "_") + ".mp4"
+            new_title = str(input("Please provide the new title: ")).strip()
+            for i in not_allowed_char:
+                new_title = new_title.replace(i, "_")
             print()
-            return new_title
-
-    return making_the_youtube_object(url).title.replace("|", "_") + ".mp4"
+            return new_title + ".mp4"
+        else:
+            yt_title = making_the_youtube_object(url=url).title
+            for x in not_allowed_char:
+                yt_title = yt_title.replace(x, "_")
+            return yt_title + ".mp4"
 
 
 def fast_stream_progressive_true(ask_or_not, url):
