@@ -4,7 +4,6 @@
 
 
   1) the first_version of the project : https://github.com/mbk-naboore/youtube_downloader
-  2) this project is the better version of the previous one (a better) code and a cleaner one.
   
   
     1) for now the code is working perfectly (I have personality tried it havily for the past 15 hours)...
