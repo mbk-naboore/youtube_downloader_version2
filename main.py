@@ -45,6 +45,11 @@ def naming_the_video(ask_or_not, url):
             for x in not_allowed_char:
                 yt_title = yt_title.replace(x, "_")
             return yt_title + ".mp4"
+    else:
+        yt_title = making_the_youtube_object(url=url).title
+        for x in not_allowed_char:
+            yt_title = yt_title.replace(x, "_")
+        return yt_title + ".mp4"
 
 
 def fast_stream_progressive_true(ask_or_not, url):
