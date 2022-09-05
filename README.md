@@ -6,11 +6,12 @@
   1) the first_version of the project : https://github.com/mbk-naboore/youtube_downloader
   
   
-    1) for now the code is working perfectly (I have personality tried it havily for the past 15 hours)...
-    2) the only thing that is a disadvantage is the comments (I did not have that much time to do all comments ,
-           but I will update those in few days with some new features...
-    3) there is a (test_urls.txt) file which is some high resolution short videos (8k, 4k, etc) 
+    
+    1) there is a (test_urls.txt) file which is some high resolution short videos (8k, 4k, etc) 
            so you can try all the different functionalities the script has...
+           
+    2) please let me know if you would like to add any other functionalities to this version of code, 
+           the next versions will have for sure more of that functionalities.
   
   
   
