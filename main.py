@@ -347,5 +347,3 @@ while True:
         print(f"'{flag}'is not recognized as an accepted option.\n")
         flag = input("\n\nWould you like to download anything else [y/Y]or[n/N] ? ").strip().lower()
         continue
-
-
