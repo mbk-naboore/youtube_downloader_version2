@@ -12,7 +12,10 @@
            
     2) please let me know if you would like to add any other functionalities to this version of code, 
            the next versions will have for sure more of that functionalities.
-  
+    
+    3) now there is 12 different functionalities in the script from downloading single videos using the URL , downloading many videos at once that urls are saved in 
+        a text file , to downloading a whole playlists by using any video's URL in that playlist...
+     
   
   
   ### I am working on this project daily ,the comments will be added with a perfect explanation... 
