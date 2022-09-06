@@ -1,6 +1,7 @@
 import os
-from pytube import YouTube
+from pytube import YouTube, Playlist
 import ffmpeg
+
 
 user_path = str(os.environ["HOMEPATH"].replace("\\", "/"))
 main_path = f"C:{user_path}" + "/Desktop/all_youtube_downloaded_video_version_2"
@@ -45,7 +46,7 @@ def naming_the_video(ask_or_not, url):
             new_title = str(input("Please provide the new title: ")).strip()
             for i in not_allowed_char:
                 new_title = new_title.replace(i, "_")
-
+            print()
             return new_title + ".mp4"
         else:
             yt_title = making_the_youtube_object(url=url).title
@@ -186,7 +187,7 @@ def reading_url_list_from_file(file):
     except BaseException as ex:
         print("Sorry there was an error while reading the urls from the file.")
         print(ex)
-def fast_urls_textfile_downloader(urls_list):
+def fast_urls_bulk_downloader(urls_list):
     """ will use the fast_stream_progressive_true to bulk download"""
     try:
         for url in urls_list:
@@ -194,7 +195,7 @@ def fast_urls_textfile_downloader(urls_list):
     except BaseException as ex:
         print("Sorry there was a problem while downloading the videos+audios from the text file...")
         print(ex)
-def best_urls_textfile_downloader(urls_list):
+def best_urls_bulk_downloader(urls_list):
     """ this function will use the (best_video_downloader) and (best_audio_downloader)
      to bulk download and then will bulk merge and clean up using:
       the(bulk_merging_and_cleaning_for_best_urls_textfile_downloader)"""
@@ -206,7 +207,7 @@ def best_urls_textfile_downloader(urls_list):
     except BaseException as ex:
         print("Sorry there was a problem while downloading the videos+audios from the text file.")
         print(ex)
-def best_audio_only_urls_textfile_downloader(urls_list):
+def best_audio_only_urls_bulk_downloader(urls_list):
     """ bulk downloading to video-only using the urls from a file..."""
     try:
         for url in urls_list:
@@ -215,7 +216,7 @@ def best_audio_only_urls_textfile_downloader(urls_list):
     except BaseException as ex:
         print("Sorry there was a problem while downloading the best audios-only from the text file.")
         print(ex)
-def best_video_only_urls_textfile_downloader(urls_list):
+def best_video_only_urls_bulk_downloader(urls_list):
     """ bulk downloading for urls from a text file..."""
     try:
         for url in urls_list:
@@ -246,6 +247,17 @@ def bulk_merging_and_cleaning_for_best_urls_textfile_downloader(ask_or_not, url)
         print(ex)
 
 
+def reading_urls_from_playlist(url):
+    """ this will return a urls_list as if the playlist urls is from a text file
+    will work exactly the same so no need to re-do any thing..."""
+    try:
+        the_playlist = Playlist(url=url)
+        return list(the_playlist.video_urls)
+    except BaseException as ex:
+        print("Sorry, there was a problem while getting URLs from the playlist.")
+        print(ex)
+
+
 def menu_of_available_options():
     print("\nPlease choose the action you would like to take:")
     print("******NOTE: any fast download can vary in resolution between 720p to 144p.******")
@@ -257,7 +269,11 @@ def menu_of_available_options():
     print("6) highest resolution (video+audi) URLs from text file.".title())
     print("7) highest resolution (video-only) URLs from text file.".title())
     print("8) highest resolution (audio-only) URLs from text file.".title())
-    print("9) to quit the script.\n".title())
+    print("9) fast download (video+audio) playlist.".title())
+    print("10) highest resolution (video+audi) playlist.".title())
+    print("11) highest resolution (video-only) playlist.".title())
+    print("12) highest resolution (audio-only) playlist.".title())
+    print("13) to quit the script.\n".title())
 
     pass
 
@@ -269,7 +285,7 @@ def main():
     if not action.isnumeric():
         print("Sorry the action you have chosen is not correct.")
         main()
-    if int(action) in list(range(1, 5)):
+    if 0 < int(action) < 5:
         url = str(input("Please provide the URL(link) of the video: ")).strip()
         if int(action) == 1:
             fast_stream_progressive_true(ask_or_not=True, url=url)
@@ -283,17 +299,29 @@ def main():
     elif 4 < int(action) < 9:
         file = str(input("\nPlease provide the path of the file that has the URLs to start the download:\n>>> ")).strip()
         if int(action) == 5:
-            fast_urls_textfile_downloader(reading_url_list_from_file(file=check_the_urls_file(file_path=file)))
+            fast_urls_bulk_downloader(reading_url_list_from_file(file=check_the_urls_file(file_path=file)))
         elif int(action) == 6:
-            best_urls_textfile_downloader(reading_url_list_from_file(file=check_the_urls_file(file_path=file)))
+            best_urls_bulk_downloader(reading_url_list_from_file(file=check_the_urls_file(file_path=file)))
         elif int(action) == 7:
-            best_video_only_urls_textfile_downloader(reading_url_list_from_file(file=check_the_urls_file(
+            best_video_only_urls_bulk_downloader(reading_url_list_from_file(file=check_the_urls_file(
                 file_path=file)))
         elif int(action) == 8:
-            best_audio_only_urls_textfile_downloader(reading_url_list_from_file(file=check_the_urls_file(
+            best_audio_only_urls_bulk_downloader(reading_url_list_from_file(file=check_the_urls_file(
                 file_path=file)))
 
-    elif int(action) == 9:
+    elif 8 < int(action) < 13:
+        url = str(input("Please provide the URL(link) of any video in the Playlist: ")).strip()
+        if int(action) == 9:
+            fast_urls_bulk_downloader(reading_urls_from_playlist(url=url))
+        elif int(action) == 10:
+            best_urls_bulk_downloader(reading_urls_from_playlist(url=url))
+        elif int(action) == 10:
+            best_video_only_urls_bulk_downloader(reading_urls_from_playlist(url=url))
+        elif int(action) == 12:
+            best_audio_only_urls_bulk_downloader(reading_urls_from_playlist(url=url))
+        pass
+
+    elif int(action) == 13:
         print("\n\nThank you for using my script...@mbk-naboore")
         exit()
 
@@ -306,6 +334,7 @@ def main():
 print("\n\nWelcome to my YouTube downloader script.\n")
 flag = "y"
 while True:
+
     if flag == "y":
         main()
         flag = input("\n\nWould you like to download anything else [y/Y]or[n/N] ? ").strip().lower()
