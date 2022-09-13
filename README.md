@@ -18,7 +18,7 @@
      
   
   
-     * for this version there is no commands like the CMD or Terminal but in the next version it will be a command based rather than choices...
+     * this version is not a command based like the CMD or Terminal but in the next version it will be...
   
   @mbk-naboore
   
