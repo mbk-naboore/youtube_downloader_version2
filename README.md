@@ -1,5 +1,6 @@
 # youtube_downloader_version2
-  this script will allow you to download any Youtube video at the highest resolution/highest speed up there by just pasting the URL , it uses pytube and ffmpeg to do so you can download a single vid , a full Youtube Playlist , bulk URLs download... 
+  this script will allow you to download any Youtube video at the highest resolution/highest speed up there by just pasting the URL , it uses pytube and ffmpeg to do so you can download a single vid , a full Youtube Playlist , bulk URLs download. You got to choose if you want the video-only, audio-only or both merged...  
+  
 
 
   1) the first_version of the project : https://github.com/mbk-naboore/youtube_downloader
