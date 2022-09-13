@@ -1,11 +1,12 @@
 # youtube_downloader_version2
-  this script will allow you to download any Youtube video at the highest resolution up there by just pasting the URL , it uses pytube and ffmpeg to do so...
-  this script will have more functionality added in the future , ex: downloading videos from a file that has many Youtube videos URLs...
+  this script will allow you to download any Youtube video at the highest resolution/highest speed up there by just pasting the URL , it uses pytube and ffmpeg to do so you can download a single vid , a full Youtube Playlist , bulk URLs download... 
 
 
   1) the first_version of the project : https://github.com/mbk-naboore/youtube_downloader
   
   
+    
+    
     
     1) there is a (test_urls.txt) file which is some high resolution short videos (8k, 4k, etc) 
            so you can try all the different functionalities the script has...
